@@ -1,0 +1,177 @@
+<%# Drift — Log List %>
+<div class="log-list-page" id="log-list" phx-hook="ScrollTop">
+  <%# -- toolbar -- %>
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <h1 class="page-title">Logs</h1>
+      <span class="badge badge-neutral"><%= @total_entries %> entries</span>
+    </div>
+
+    <div class="toolbar-right">
+      <%# Search %>
+      <form phx-change="search" class="search-form">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input
+          type="search"
+          name="search"
+          placeholder="Search messages, sources, or metadata…"
+          value={@search}
+          class="search-input"
+          autocomplete="off"
+        />
+      </form>
+
+      <%# Severity filter %>
+      <form phx-change="filter" class="filter-form">
+        <select name="severity" class="filter-select">
+          <option value="" selected={is_nil(@severity)}>All severities</option>
+          <%= for sev <- Drift.LogEntry.severity_levels() do %>
+            <option value={sev} selected={@severity == sev}><%= String.capitalize(sev) %></option>
+          <% end %>
+        </select>
+      </form>
+
+      <%= if @severity || @search do %>
+        <button phx-click="clear-filters" class="btn btn-ghost btn-sm" title="Clear all filters">
+          Clear
+        </button>
+      <% end %>
+
+      <%# Simulate button — inserts a random log for real-time demo %>
+      <button phx-click="simulate-log" class="btn btn-ghost btn-sm" title="Simulate a new log entry arriving in real-time">
+        Simulate
+      </button>
+
+      <%# Add log button — toggles the create form %>
+      <button phx-click="toggle-add-form" class="btn btn-accent btn-sm" title="Add a new log entry">
+        + Add Log
+      </button>
+    </div>
+  </div>
+
+  <%# -- add-log form (toggle-able) -- %>
+  <%= if @show_add_form do %>
+    <div class="add-log-form-card">
+      <h2 class="add-log-title">New Log Entry</h2>
+      <form phx-submit="create-log" class="add-log-form">
+        <div class="add-log-fields">
+          <div class="form-field">
+            <label for="log-severity" class="form-label">Severity</label>
+            <select id="log-severity" name="severity" class="filter-select" required>
+              <option value="">Select…</option>
+              <%= for sev <- Drift.LogEntry.severity_levels() do %>
+                <option value={sev}><%= String.capitalize(sev) %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="form-field">
+            <label for="log-source" class="form-label">Source</label>
+            <input id="log-source" type="text" name="source" class="search-input"
+                   placeholder="e.g. api-gateway" required maxlength="100" />
+          </div>
+
+          <div class="form-field form-field--wide">
+            <label for="log-message" class="form-label">Message</label>
+            <input id="log-message" type="text" name="message" class="search-input"
+                   placeholder="Log message text…" required maxlength="2000" />
+          </div>
+        </div>
+
+        <div class="add-log-actions">
+          <button type="submit" class="btn btn-accent btn-sm">Submit</button>
+          <button type="button" phx-click="toggle-add-form" class="btn btn-ghost btn-sm">Cancel</button>
+        </div>
+      </form>
+    </div>
+  <% end %>
+
+  <%# -- log table -- %>
+  <div class="log-table-wrap">
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th class="col-sev">Level</th>
+          <th class="col-ts">Timestamp</th>
+          <th class="col-src">Source</th>
+          <th class="col-msg">Message</th>
+        </tr>
+      </thead>
+      <tbody id="log-rows">
+        <%= if Enum.empty?(@logs) do %>
+          <tr>
+            <td colspan="4" class="empty-state">
+              <div class="empty-icon">📋</div>
+              <p class="empty-title">No log entries match your filters</p>
+              <p class="empty-desc">Try adjusting the severity filter or search term, or add a new log entry.</p>
+            </td>
+          </tr>
+        <% else %>
+          <%= for entry <- @logs do %>
+            <tr class={"log-row log-row--#{entry.severity}"} id={"log-#{entry.id}"}>
+              <td class="col-sev">
+                <span class={"severity-pill severity--#{entry.severity}"}>
+                  <%= String.upcase(entry.severity) %>
+                </span>
+              </td>
+              <td class="col-ts">
+                <time datetime={entry.timestamp} class="log-time">
+                  <%= Calendar.strftime(entry.timestamp, "%Y-%m-%d %H:%M:%S") %>
+                </time>
+              </td>
+              <td class="col-src">
+                <span class="source-tag"><%= entry.source %></span>
+              </td>
+              <td class="col-msg">
+                <.link navigate={"/logs/#{entry.id}"} class="log-message-link">
+                  <%= truncate_message(entry.message) %>
+                </.link>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%# -- pagination -- %>
+  <%= if @total_pages > 1 do %>
+    <div class="pagination">
+      <span class="pagination-info">
+        Page <%= @page %> of <%= @total_pages %>
+      </span>
+      <div class="pagination-controls">
+        <.link
+          :if={@page > 1}
+          patch={build_path(@page - 1, @severity, @search, @sort)}
+          class="btn btn-ghost btn-sm"
+        >
+          ← Previous
+        </.link>
+
+        <%= for p <- page_range(@page, @total_pages) do %>
+          <%= if p == :ellipsis do %>
+            <span class="pagination-ellipsis">…</span>
+          <% else %>
+            <.link
+              patch={build_path(p, @severity, @search, @sort)}
+              class={"btn btn-sm #{if p == @page, do: "btn-accent", else: "btn-ghost"}"}
+            >
+              <%= p %>
+            </.link>
+          <% end %>
+        <% end %>
+
+        <.link
+          :if={@page < @total_pages}
+          patch={build_path(@page + 1, @severity, @search, @sort)}
+          class="btn btn-ghost btn-sm"
+        >
+          Next →
+        </.link>
+      </div>
+    </div>
+  <% end %>
+</div>
