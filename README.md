@@ -1,14 +1,14 @@
 # Drift — complete Elixir/Phoenix log monitoring dashboard example app
 
-**Drift** is a free, open-source log monitoring dashboard built with Elixir/Phoenix. A log viewer and observability application built with Phoenix LiveView. Run it locally, deploy it as a self-hosted monitoring dashboard, or [remix it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) to make it your own — the whole application (code, design, seeded demo data) ships in this repository under the MIT license.
+**Drift** is a free, open-source log monitoring dashboard built with Elixir/Phoenix. A log viewer and observability application built with Phoenix LiveView. Run it locally, deploy it as a self-hosted monitoring dashboard, or [remix it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) to make it your own — the whole application (code, design, seeded demo data) ships in this repository under the Apache-2.0 license.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-16b881.svg)](LICENSE) ![Stack](https://img.shields.io/badge/Stack-Elixir%2FPhoenix-3b82f6) [![Built with cenius.ai](https://img.shields.io/badge/Built%20with-cenius.ai-8b5cf6)](https://cenius.ai)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE) ![Stack](https://img.shields.io/badge/Stack-Elixir%2FPhoenix-3b82f6) [![Built with cenius.ai](https://img.shields.io/badge/Built%20with-cenius.ai-8b5cf6)](https://cenius.ai)
 
-[![Open in cenius.ai](https://img.shields.io/badge/▶%20Open%20%26%20edit%20in-cenius.ai-8b5cf6?style=for-the-badge)](https://cenius.ai/marketplace/p/drift)
+[![Open in cenius.ai](https://img.shields.io/badge/▶%20Open%20%26%20edit%20in-cenius.ai-8b5cf6?style=for-the-badge)](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix)
 
-> **▶ [Open & edit in cenius.ai](https://cenius.ai/marketplace/p/drift)** — one click to an editable workspace: describe changes in plain English, get an instant preview, one-click deploy and host. Modifications made on the platform come with full rebrand & relicense rights.
+> **▶ [Open & edit in cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix)** — one click to an editable workspace: describe changes in plain English, get an instant preview, one-click deploy and host. Modifications made on the platform come with full rebrand & relicense rights.
 
-_Local clone? See [Quick start](#quick-start) or [Quickstart](#quickstart) below. cenius.ai is the zero-setup path._
+_Local clone? See [Quick start](#quick-start) below. cenius.ai is the zero-setup path._
 
 ## Demo
 
@@ -99,7 +99,7 @@ The app is built with Elixir/Phoenix. What you see in this repo is the full prod
 
 ### Is Drift free for commercial use?
 
-Yes — it ships under the MIT license, which permits commercial use, modification and redistribution. The full text is in [LICENSE](LICENSE).
+Yes — it ships under the Apache-2.0 license, which permits commercial use, modification and redistribution. The full text is in [LICENSE](LICENSE).
 
 ### Is white-labeling Drift allowed?
 
@@ -111,7 +111,7 @@ Yes — [load it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_
 
 ## License & rebranding
 
-Released under the [MIT License](LICENSE) (© 2026 Cenius AI) — free for personal and commercial use.
+Released under the [Apache License 2.0](LICENSE) (© 2026 Cenius AI) — free for personal and commercial use. The Cenius name/logo are trademarks (see NOTICE).
 
 **Need a customized version?** [Remix this app on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) — modifications made on the platform come with **full rebrand & relicense rights** over your derivative.
 
