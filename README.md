@@ -1,4 +1,4 @@
-# Drift — open-source log monitoring dashboard
+# Drift — complete Elixir/Phoenix log monitoring dashboard example app
 
 **Drift** is a free, open-source log monitoring dashboard built with Elixir/Phoenix. A log viewer and observability application built with Phoenix LiveView. Run it locally, deploy it as a self-hosted monitoring dashboard, or [remix it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) to make it your own — the whole application (code, design, seeded demo data) ships in this repository under the MIT license.
 
@@ -6,7 +6,9 @@
 
 ## Demo
 
-![Drift demo — log monitoring dashboard built with Elixir/Phoenix](.github/media/hero.gif)
+![Drift — log monitoring dashboard](.github/media/poster.png)
+
+![Drift demo — log monitoring dashboard built with Elixir/Phoenix](.github/media/hero_flagship.gif)
 
 ▶ **[Watch the full demo video](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix)** — the complete walkthrough, playing on the project's cenius.ai page · [MP4 file](.github/media/demo.mp4)
 
