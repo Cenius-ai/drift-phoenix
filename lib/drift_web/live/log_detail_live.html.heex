@@ -1,0 +1,99 @@
+<%# Drift — Log Detail (split-pane layout) %>
+<%= if @log do %>
+  <div class="log-detail-shell">
+    <%# -- main detail column -- %>
+    <div class="log-detail-main">
+      <div class="detail-header">
+        <.link navigate="/logs" class="btn btn-ghost btn-sm back-link">
+          ← Back to logs
+        </.link>
+        <h1 class="page-title">Log Entry</h1>
+        <span class={"severity-pill severity--#{@log.severity} severity-pill--lg"}>
+          <%= String.upcase(@log.severity) %>
+        </span>
+      </div>
+
+      <%# -- main card -- %>
+      <div class="detail-card">
+        <dl class="detail-grid">
+          <div class="detail-item">
+            <dt>Timestamp</dt>
+            <dd>
+              <time datetime={@log.timestamp}>
+                <%= Calendar.strftime(@log.timestamp, "%Y-%m-%d %H:%M:%S.%f") <> " UTC" %>
+              </time>
+            </dd>
+          </div>
+
+          <div class="detail-item">
+            <dt>Source</dt>
+            <dd><span class="source-tag source-tag--lg"><%= @log.source %></span></dd>
+          </div>
+
+          <div class="detail-item">
+            <dt>Ingested At</dt>
+            <dd><%= Calendar.strftime(@log.inserted_at, "%Y-%m-%d %H:%M:%S") <> " UTC" %></dd>
+          </div>
+
+          <div class="detail-item">
+            <dt>Entry ID</dt>
+            <dd class="mono"><%= @log.id %></dd>
+          </div>
+        </dl>
+
+        <div class="detail-section">
+          <h2 class="section-title">Message</h2>
+          <pre class="message-block"><%= @log.message %></pre>
+        </div>
+
+        <%= if map_size(@log.metadata) > 0 do %>
+          <div class="detail-section">
+            <h2 class="section-title">Metadata</h2>
+            <div class="metadata-grid">
+              <%= for {key, value} <- Enum.sort(@log.metadata) do %>
+                <div class="meta-item">
+                  <span class="meta-key"><%= key %></span>
+                  <span class="meta-value"><%= format_meta_value(value) %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <details class="raw-section">
+          <summary class="raw-toggle">Raw JSON</summary>
+          <pre class="raw-block"><%= raw_json(@log) %></pre>
+        </details>
+      </div>
+    </div>
+
+    <%# -- sidebar: related logs from the same source -- %>
+    <aside :if={not Enum.empty?(@related_logs)} class="detail-sidebar">
+      <div class="sidebar-card">
+        <h3 class="sidebar-title">Same source — <%= @log.source %></h3>
+        <ul class="sidebar-list">
+          <%= for entry <- @related_logs do %>
+            <li class="sidebar-item">
+              <.link navigate={"/logs/#{entry.id}"} class="sidebar-link">
+                <span class={"severity-pill severity--#{entry.severity}"}>
+                  <%= String.upcase(entry.severity) %>
+                </span>
+                <span class="sidebar-time">
+                  <%= Calendar.strftime(entry.timestamp, "%H:%M:%S") %>
+                </span>
+                <span class="sidebar-msg"><%= entry.message |> String.slice(0, 60) %></span>
+              </.link>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </aside>
+  </div>
+<% else %>
+  <div class="empty-state" style="padding-top: 80px;">
+    <div class="empty-icon">🔍</div>
+    <p class="empty-title">Log entry not found</p>
+    <p class="empty-desc">The requested log entry does not exist. It may have been removed or the ID is invalid.</p>
+    <.link navigate="/logs" class="btn btn-accent btn-sm" style="margin-top: 16px;">← Back to logs</.link>
+  </div>
+<% end %>
