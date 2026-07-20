@@ -77,29 +77,29 @@ _Full guide: [`USAGE.md`](USAGE.md)_
 
 ## Architecture
 
-Elixir/Phoenix application, delivered as a complete, runnable project (59 files). Top-level layout: `assets/`, `config/`, `lib/`, `priv/`, `test/`. `install.sh` provisions dependencies and seeds demo data, so the app boots with something to show. Setup details live in [`INSTALL.md`](INSTALL.md).
+Elixir/Phoenix application, delivered as a complete, runnable project (53 files). Top-level layout: `assets/`, `config/`, `lib/`, `priv/`, `test/`. `install.sh` provisions dependencies and seeds demo data, so the app boots with something to show. Setup details live in [`INSTALL.md`](INSTALL.md).
 
 ## FAQ
 
 ### How do I self-host Drift?
 
-Clone this repository and run `./install.sh`, then start the app as described in [`INSTALL.md`](INSTALL.md). Drift is fully self-hostable — no external services are required to try it.
+Everything you need ships in this repo: clone it, run `./install.sh` to install dependencies and seed demo data, then follow [`INSTALL.md`](INSTALL.md) to start it. No external services required.
+
+### What powers Drift under the hood?
+
+The app is built with Elixir/Phoenix. What you see in this repo is the full production source, demo data included. Highlights include light/Dark Theme Toggle.
 
 ### Is Drift free for commercial use?
 
-Yes. The code is MIT-licensed — use it, modify it, and ship it commercially. See [LICENSE](LICENSE).
+Yes — it ships under the MIT license, which permits commercial use, modification and redistribution. The full text is in [LICENSE](LICENSE).
 
-### Can I rebrand or white-label Drift?
+### Is white-labeling Drift allowed?
 
-Yes — and the easiest way is [remixing it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix): modifications made on the platform come with full rebrand and relicense rights over your derivative.
+Absolutely. [Open it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) and remix it there — platform modifications come with full rebrand and relicense rights over your derivative, so the result is entirely yours.
 
-### How can I customize Drift without editing code?
+### Can I change Drift without writing code?
 
-Open it on [cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix) and describe the changes you want in plain English — the platform modifies the app and gives you a new, downloadable build.
-
-### What is Drift built with?
-
-Elixir/Phoenix. The full source in this repository is exactly what the app runs.
+Yes — [load it on cenius.ai](https://cenius.ai/marketplace/p/drift?ref=gh&utm_campaign=drift-phoenix), describe the change in plain English, and you get back a new downloadable build with the modification applied.
 
 ## License & rebranding
 
